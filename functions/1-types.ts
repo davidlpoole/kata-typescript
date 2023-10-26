@@ -56,7 +56,10 @@ export function addNumbersAndStrings(
   num1: number | string,
   num2: number | string
 ): number {
-  return Number(num1) + Number(num2)
+  const convertedNum1 = typeof num1 === 'number' ? num1 : Number(num1)
+  const convertedNum2 = typeof num2 === 'number' ? num2 : Number(num2)
+
+  return convertedNum1 + convertedNum2
 }
 
 // fizzbuzz accepts a number and returns a string or number
@@ -66,32 +69,44 @@ export function addNumbersAndStrings(
 // otherwise, return the original number
 export function fizzbuzz(num: number): number | string {
   let output = ''
-  if (num % 3 === 0) output += 'fizz'
-  if (num % 5 === 0) output += 'buzz'
-  return output === '' ? num : output
+
+  const divisibleBy3 = num % 3 === 0
+  const divisibleBy5 = num % 5 === 0
+
+  if (divisibleBy3) output += 'fizz'
+  if (divisibleBy5) output += 'buzz'
+
+  return output || num
 }
 
 // ----------- TYPE ALIASES -----------
 
-type StringOrNumber = number | string
-
 // sumMatchingType accepts two arguments that can be either a number or a string
 // if both arguments are numbers, the sum of the two arguments should be returned as a number
 // if either argument is a string, the two arguments should be summed together and returned as a string
+
+type StringOrNumber = number | string
+
 export function sumMatchingType(
   num1: StringOrNumber,
   num2: StringOrNumber
 ): StringOrNumber {
-  if (typeof num1 === 'string' || typeof num2 === 'string')
-    return Number(num1) + Number(num2) + ''
-  return num1 + num2
+  return typeof num1 === 'string' || typeof num2 === 'string'
+    ? `${Number(num1) + Number(num2)}`
+    : num1 + num2
 }
 
 // getNextTrafficLightColour accepts the current colour of a traffic light colour and returns the next colour
 // the light sequence is green -> yellow -> red -> green -> yellow -> (etc)
 // Remember to use a type alias!
-export function getNextTrafficLightColour(currentColour: string): string {
-  const cycle = ['green', 'yellow', 'red']
-  const index = cycle.findIndex((c) => c === currentColour)
-  return cycle[(index + 1) % 3]
+
+type TrafficLightColour = 'green' | 'yellow' | 'red'
+
+export function getNextTrafficLightColour(
+  currentColour: TrafficLightColour
+): TrafficLightColour {
+  const cycle: TrafficLightColour[] = ['green', 'yellow', 'red']
+  const currentIndex = cycle.indexOf(currentColour)
+  const nextIndex = (currentIndex + 1) % cycle.length
+  return cycle[nextIndex]
 }

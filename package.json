@@ -29,5 +29,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "dependencies": {
+    "benchmark": "^2.1.4"
   }
 }
