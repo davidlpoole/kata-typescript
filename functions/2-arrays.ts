@@ -62,22 +62,22 @@ export function generateUsername(
 // e.g. getNextMapCoord([0, 0], 'E') should return [1, 0]
 // e.g. getNextMapCoord([0, 0], 'W') should return [-1, 0]
 
+type coordinate = [number, number]
+
 interface Directions {
-  [key: string]: [number, number]
+  [key: string]: coordinate
 }
 
 export function getNextMapCoord(
   coord: [number, number],
   direction: string
-): [number, number] {
+): coordinate {
   const directions: Directions = {
     N: [0, 1],
     S: [0, -1],
     E: [1, 0],
     W: [-1, 0],
   }
-  const result = [0, 0]
-  result[0] = coord[0] + directions[direction][0]
-  result[1] = coord[1] + directions[direction][1]
-  return result as [number, number]
+  const [x, y] = directions[direction]
+  return [coord[0] + x, coord[1] + y]
 }
